@@ -1,7 +1,8 @@
 name: morning
+
 on:
   schedule:
-  - cron: '0 22 * * *'
+    - cron: '0 22 * * *'
   workflow_dispatch:
 
 jobs:
@@ -11,23 +12,22 @@ jobs:
 
     steps:
       - name: checkout
-        uses: actions/checkout@v2.4.2
+        uses: actions/checkout@v2
+        with:
+          ref: master
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2.6.4
+      - name: setup node
+        uses: actions/setup-node@v2.7.1
         with:
           node-version: '16.x'
 
-      - name: Setup Python
-        uses: actions/setup-python@v2.2.2
+      - name: setup python
+        uses: actions/setup-python@v2.3.1
         with:
           python-version: '3.9'
           architecture: 'x64'
 
-      - name: Install dependencies and run script
-        run: |
-          pip install -r ./requirements.txt
-          python ./main.py
+      - run: pip install -r ./requirements.txt && python ./main.py
 
         env:
           APP_ID: ${{ secrets.APP_ID }}
@@ -37,11 +37,3 @@ jobs:
           START_DATE: ${{ secrets.START_DATE }}
           BIRTHDAY: ${{ secrets.BIRTHDAY }}
           CITY: ${{ secrets.CITY }}
-
-      - name: Save result to environment file
-        run: |
-          echo "RESULT=$(cat result.txt)" >> $GITHUB_ENV
-          
-      - name: Cleanup
-        run: |
-          rm result.txt
