@@ -1,7 +1,7 @@
 name: morning
 on:
   schedule:
-  - cron: '0 22 * * *'
+    - cron: '0 22 * * *'
   workflow_dispatch:
 
 jobs:
@@ -10,29 +10,28 @@ jobs:
     name: send morning to your girlfriend
 
     steps:
-    - name: checkout
-      uses: actions/checkout@v2
-      with:
-        ref: master
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Setup Node.js 16.x
-      uses: actions/setup-node@v2.4.4
-      with:
-        node-version: '16.x'
-        
-    - name: Setup Python 3.9.x
-      uses: actions/setup-python@v2.2.2
-      with:
-        python-version: '3.9'
-        architecture: 'x64'
-        
-    - run: pip install -r ./requirements.txt && python ./main.py
+      - name: Setup Node.js
+        uses: actions/setup-node@v2.5.2
+        with:
+          node-version: '16.x'
 
-    env:
-      APP_ID: ${{ secrets.APP_ID }}
-      APP_SECRET: ${{ secrets.APP_SECRET }}
-      TEMPLATE_ID: ${{ secrets.TEMPLATE_ID }}
-      USER_ID: ${{ secrets.USER_ID }}
-      START_DATE: ${{ secrets.START_DATE }}
-      BIRTHDAY: ${{ secrets.BIRTHDAY }}
-      CITY: ${{ secrets.CITY }}
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run script
+        run: npm run start
+
+      - name: Set output
+        run: echo ::set-output name=result::success
+
+        env:
+          APP_ID: ${{ secrets.APP_ID }}
+          APP_SECRET: ${{ secrets.APP_SECRET }}
+          TEMPLATE_ID: ${{ secrets.TEMPLATE_ID }}
+          USER_ID: ${{ secrets.USER_ID }}
+          START_DATE: ${{ secrets.START_DATE }}
+          BIRTHDAY: ${{ secrets.BIRTHDAY }}
+          CITY: ${{ secrets.CITY }}
