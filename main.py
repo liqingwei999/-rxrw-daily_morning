@@ -22,8 +22,8 @@ def get_weather():
   url ="https://restapi.amap.com/v3/weather/weatherInfo?city=遵义&key=0aaf3d9a8ebe08b6709afe5661717245"
   #url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
   res = requests.get(url).json()
-  weather = res['data']['list'][0]
-  return weather['weather'], math.floor(weather['temp'])
+  weather = res['lives'][0]
+  return weather['weather'], math.floor(int(weather['temperature']))
 
 def get_count():
   delta = today - datetime.strptime(start_date, "%Y-%m-%d")
