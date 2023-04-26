@@ -17,7 +17,7 @@ app_secret = os.environ["APP_SECRET"]
 user_id = os.environ["USER_ID"]
 template_id = os.environ["TEMPLATE_ID"]
 
-weather_key = os.environ["WEATHER_KEY"]
+
 
 def get_weather():
   url = "https://restapi.amap.com/v3/weather/weatherInfo?key=0aaf3d9a8ebe08b6709afe5661717245&city=520300"
