@@ -17,12 +17,14 @@ app_secret = os.environ["APP_SECRET"]
 user_id = os.environ["USER_ID"]
 template_id = os.environ["TEMPLATE_ID"]
 
+weather_key = os.environ["WEATHER_KEY"]
 
 def get_weather():
-  url ="https://restapi.amap.com/v3/weather/weatherInfo?city=遵义&key=0aaf3d9a8ebe08b6709afe5661717245"
-  #url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
+  url = "https://restapi.amap.com/v3/weather/weatherInfo?key="+0aaf3d9a8ebe08b6709afe5661717245+"&city=遵义"
   res = requests.get(url).json()
   weather = res['lives'][0]
+  print("reporttime=====>",weather['reporttime'])
+  print("math=====>",math.floor(int(weather['temperature'])))
   return weather['weather'], math.floor(int(weather['temperature']))
 
 def get_count():
@@ -38,7 +40,7 @@ def get_birthday():
 def get_words():
   words = requests.get("https://api.shadiao.pro/chp")
   if words.status_code != 200:
-    return get_words()
+    return "一想到你，我这张脸就泛起微笑"
   return words.json()['data']['text']
 
 def get_random_color():
@@ -49,7 +51,11 @@ client = WeChatClient(app_id, app_secret)
 
 wm = WeChatMessage(client)
 wea, temperature = get_weather()
-##"weather":{"value":wea},
-data = {"temperature":{"value":temperature},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
+data = {"city":{"value":city, "color":get_random_color()},
+        "weather":{"value":wea, "color":get_random_color()},
+        "temperature":{"value":temperature, "color":get_random_color()},
+        "love_days":{"value":get_count(), "color":get_random_color()},
+        "birthday_left":{"value":get_birthday(), "color":get_random_color()},
+        "words":{"value":get_words(), "color":get_random_color()}}
 res = wm.send_template(user_id, template_id, data)
 print(res)
