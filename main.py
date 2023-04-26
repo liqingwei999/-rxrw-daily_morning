@@ -7,15 +7,15 @@ import os
 import random
 
 today = datetime.now()
-start_date = os.environ['START_DATE']
-city = os.environ['CITY']
-birthday = os.environ['BIRTHDAY']
+start_date = "2022-08-09"
 
-app_id = os.environ["APP_ID"]
-app_secret = os.environ["APP_SECRET"]
+birthday = "05-20"
+city = "遵义"
+app_id = "wx54bc83a8fc2ee41e"
+app_secret = "cc354d95d58fda3fd090711bdb3b8884"
 
-user_id = os.environ["USER_ID"]
-template_id = os.environ["TEMPLATE_ID"]
+user_id = "oeDkj5-GP77_wanLHDs40LBrYEn4"
+template_id = "ar9SNR_D9jbo-xaSx6Gz5DDV_zefanORzMbpxBOpW1g"
 
 
 
